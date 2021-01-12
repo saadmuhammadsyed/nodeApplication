@@ -7,5 +7,5 @@ app.get('/', (req, res) => {
 })
 
 app.listen(port, () => {
-  console.log(`NodeJS server listening at http://localhost:${port}`)
+  console.log(`NodeJS new server listening at http://localhost:${port}`)
 })
