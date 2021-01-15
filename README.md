@@ -34,4 +34,4 @@ followed by a response *listening at http://localhost:3000*
 
 ## workflow  
 now start from creating a continuous integration build. one would have to ping his github repository here as well. separate build would be required for a continuous deployment build. here configuration takes place to build an image based on the dockerfile and deploy it onto dockerhub automatically. now a new repository would be created in dockerhub as this will show jenkins where to push the image. we also add a pipeline script.   
-![IMAGE](https://github.com/saadmuhammadsyed/nodeApplication/blob/master/image1.PNG?raw=true)
+![](https://github.com/saadmuhammadsyed/nodeApplication/blob/production/image1.PNG?raw=true)
