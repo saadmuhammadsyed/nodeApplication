@@ -6,7 +6,8 @@ CI/CD pipeline for a Node.js application with Docker and Jenkins
 [Jenkins](https://www.jenkins.io/download/)  
 [SocketXP](https://www.socketxp.com/download)  
 
-## Dependencies   
+## Dependencies 
+```  
 - Blue Ocean    
 - Credentials Plugin    
 - Docker Plugin    
@@ -15,3 +16,4 @@ CI/CD pipeline for a Node.js application with Docker and Jenkins
 - Oracle Java SE Development Kit Installer Plugin  
 - Pipeline Plugin  
 - Timestamper  
+```
