@@ -1,13 +1,11 @@
-# nodeApplication
-CI/CD pipeline for a Node.js application with Docker and Jenkins
+# Docker + Jenkins CI/CD for NodeJS
+a simple CI/CD setup for NodeJS application using Docker and Jenkins.
 
-## prerequisites
-[Docker](https://www.docker.com/products/docker-desktop)  
-[Docker Hub](https://hub.docker.com/)   
-[Jenkins](https://www.jenkins.io/download/)  
+## Prerequisites
+[Docker Desktop](https://www.docker.com/products/docker-desktop)    
 [SocketXP](https://www.socketxp.com/download)  
 
-## dependencies  
+## Dependencies
 - Blue Ocean    
 - Credentials Plugin    
 - Docker Plugin    
@@ -17,21 +15,48 @@ CI/CD pipeline for a Node.js application with Docker and Jenkins
 - Pipeline Plugin  
 - Timestamper  
 
-## central idea
-using Jenkins to build a Continuous Integration and Continuous Delivery development pipeline from scratch and automatically deploying it to DockerHub. the pipeline runs test and safely deploys the newer version.    
+## Central idea
+Using Jenkins to build a Continuous Integration and Continuous Delivery development pipeline from scratch and automatically deploying it to DockerHub. the pipeline runs test and safely deploys the newer version.  
 
-## initialization
-make sure you've virtuallization 'enabled'. then move onto making a dockerfile and then build a corresponding docker image and configure your git repo. consider setting up *web hooks* to your repository, for this to work you've to download the [SocketXP](https://www.socketxp.com/download). then pour all the files to github. install node locally(if it's not previously installed). make an account on [Docker Hub](https://hub.docker.com/)   
-now to run jenkins on docker  
+## Setup
+1. Using ?? this Jenkins image since it has docker client which can be further configured to use host docker's agent.
 ```
-docker pull jenkins/jenkins   
+docker run u root --rm a -p 8080:8080 -p 50000:50000 -v "C:/Program Files/Docker/Jenkins":/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock --name jenkins jenkinsci/blueocean
 ```
-start jenkins and install all the above stated plugins and NodeJS from the Global Tool Configuration. now we finally run our app.    
+Now the Jenkins would be accessible on http://localhost:8080/  
 ```
-node app.js  
+docker ps  
+CONTAINER ID   IMAGE                 COMMAND                  CREATED        STATUS        PORTS                                              NAMES  
+51ded368cd3a   jenkinsci/blueocean   "/sbin/tini -- /usr/…"   46 hours ago   Up 46 hours   0.0.0.0:8080->8080/tcp, 0.0.0.0:50000->50000/tcp   jenkins  
 ```
-followed by a response *listening at http://localhost:3000*  
+docker process status shown above 
+2. SocketXP is used to expose our local Jenkins server so that it can recieve the github web-hook events on its endpoint, requiring reverse proxy to create a tunnel. 
+```
+socketxp login "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MTMxMjg3MTgsImlkIjoic3llZHNtczk4QGdtYWlsLmNvbSJ9.uVWTRPJI8RDilLX63ZIpnl67jBZ6Dk2YI0qWtHjvaVA"
+Login Succeeded.
+User [] Email [syedsms98@gmail.com].  
+```
+URL generated from SocketXP as a web-hook for target repository in order to recieve the github events.  
+```
+https://syedsms98-hwg5rhf1.socketxp.com/github-webhook/
+```
+Now the Jenkins would be able to  recieve the web-hook events from the repository.
 
-## workflow  
-now start from creating a continuous integration build. one would have to ping his github repository here as well. separate build would be required for a continuous deployment build. here configuration takes place to build an image based on the dockerfile and deploy it onto dockerhub automatically. now a new repository would be created in dockerhub as this will show jenkins where to push the image. we also add a pipeline script.   
-![](https://github.com/saadmuhammadsyed/nodeApplication/blob/production/image1.PNG?raw=true)
+
+## Workflow
+### Continous Integration 
+This pipeline would run on master branch, pull the code, install dependencies and run code through
+```
+npm install
+npm test
+```
+If all the test are successfully passed then it would merge the master branch to production. Logs are [here](https://github.com/saadmuhammadsyed/nodeApplication/blob/production/log.txt)
+![](https://github.com/saadmuhammadsyed/nodeApplication/blob/production/image4.PNG)
+### Continuous Development 
+This will pull the code form production branch and will build image using Dockerfile and then push the build image to docker hub.
+![](https://github.com/saadmuhammadsyed/nodeApplication/blob/production/image1.PNG)
+
+For these pipelines to work, configuring github ssh credentials(private and public key pairs) for pulling and pushing the repository is required as well as the dockerhub credentials for pushing the image to the image registry.  
+Both thses are configured via the Jenkins Credentials Manager.
+![](https://github.com/saadmuhammadsyed/nodeApplication/blob/production/image5.PNG)
+
