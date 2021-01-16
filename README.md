@@ -19,7 +19,7 @@ a simple CI/CD setup for NodeJS application using Docker and Jenkins.
 Using Jenkins to build a Continuous Integration and Continuous Delivery development pipeline from scratch and automatically deploying it to DockerHub. the pipeline runs test and safely deploys the newer version.  
 
 ## Setup
-1. Using ?? this Jenkins image since it has docker client which can be further configured to use host docker's agent.
+1. Using this Jenkins image since it has docker client which can be further configured to use host docker's agent.
 ```
 docker run u root --rm a -p 8080:8080 -p 50000:50000 -v "C:/Program Files/Docker/Jenkins":/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock --name jenkins jenkinsci/blueocean
 ```
