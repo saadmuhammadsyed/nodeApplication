@@ -1,0 +1,45 @@
+Started by GitHub push by saadmuhammadsyed
+Running as SYSTEM
+Building in workspace /var/jenkins_home/workspace/continuous integration dev
+The recommended git tool is: NONE
+using credential f057c204-4b1b-4c8d-8d87-87571fee61ca
+ > git rev-parse --is-inside-work-tree # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url git@github.com:saadmuhammadsyed/nodeApplication.git # timeout=10
+Fetching upstream changes from git@github.com:saadmuhammadsyed/nodeApplication.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.26.2'
+using GIT_SSH to set credentials git client
+ > git fetch --tags --force --progress -- git@github.com:saadmuhammadsyed/nodeApplication.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+Seen branch in repository origin/master
+Seen branch in repository origin/production
+Seen 2 remote branches
+ > git show-ref --tags -d # timeout=10
+Checking out Revision 4c9da016f75e0d00e5a6505ad300137d58168d6c (origin/master)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 4c9da016f75e0d00e5a6505ad300137d58168d6c # timeout=10
+Commit message: "Migrated from node to node:alpine"
+ > git rev-list --no-walk 7dc2c56b526ce6ba431a4314305a2a9ff84a12b6 # timeout=10
+[continuous integration dev] $ /bin/sh -xe /tmp/jenkins1109931914824019221.sh
++ npm install
+npm WARN nodeApplication@1.0.0 No description
+npm WARN nodeApplication@1.0.0 No repository field.
+
+audited 50 packages in 3.388s
+found 0 vulnerabilities
+
++ npm test
+
+> nodeApplication@1.0.0 test /var/jenkins_home/workspace/continuous integration dev
+> echo test passed && exit 0
+
+test passed
+The recommended git tool is: NONE
+using credential f057c204-4b1b-4c8d-8d87-87571fee61ca
+Pushing HEAD to branch production at repo origin
+ > git --version # timeout=10
+ > git --version # 'git version 2.26.2'
+using GIT_SSH to set credentials git client
+ > git push git@github.com:saadmuhammadsyed/nodeApplication.git HEAD:production # timeout=10
+Triggering a new build of continuous deployment #31
+Finished: SUCCESS
